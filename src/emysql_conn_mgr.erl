@@ -419,8 +419,8 @@ lock_next_connection(Available ,Locked, Who) ->
     end.
 
 connection_locked_at(Conn, MonitorRef) ->
-	Conn#emysql_connection{locked_at=lists:nth(2, tuple_to_list(now())),
-			       monitor_ref = MonitorRef}.
+	{_,S,_} = erlang:timestamp(),
+	Conn#emysql_connection{locked_at=S, monitor_ref = MonitorRef}.
 
 serve_waiting_pids(Pool) ->
     {Waiting, Available, Locked, NewRefs} = serve_waiting_pids(Pool#pool.waiting, Pool#pool.available, Pool#pool.locked, []),
